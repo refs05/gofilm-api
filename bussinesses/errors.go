@@ -3,12 +3,19 @@ package bussinesses
 import "errors"
 
 var (
-	// ErrInternalServerError will throw if any the Internal Server Error happen
-	ErrInternalServerError = errors.New("Internal Server Error")
-	// ErrNotFound will throw if the requested item is not exists
-	ErrNotFound = errors.New("Your requested Item is not found")
-	// ErrConflict will throw if the current action already exists
-	ErrConflict = errors.New("Your Item already exist")
-	// ErrBadParamInput will throw if the given request-body or params is not valid
-	ErrBadParamInput = errors.New("Given Param is not valid")
+	ErrInternalServer = errors.New("something gone wrong, contact administrator")
+
+	ErrNotFound = errors.New("data not found")
+
+	ErrIDNotFound = errors.New("id not found")
+
+	ErrNewsIDResource = errors.New("(NewsID) not found or empty")
+
+	ErrNewsTitleResource = errors.New("(NewsTitle) not found or empty")
+
+	ErrCategoryNotFound = errors.New("category not found")
+
+	ErrDuplicateData = errors.New("duplicate data")
+
+	ErrEmailPasswordNotFound = errors.New("(Email) or (Password) empty")
 )
