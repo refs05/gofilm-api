@@ -28,7 +28,7 @@ func (nr *mysqlUsersRepository) GetByID(Id int) (*users.User, error) {
 	
 func (nr *mysqlUsersRepository) Update(id int, user *users.User) (*users.User, error) {
 	
-	err := nr.DB.Model(&user).Updates(&user).Error;
+	err := nr.DB.Model(&user).Where("id = ?", id).Updates(&user).Error;
 	if err != nil {
 		return &users.User{}, err
 	}
@@ -36,9 +36,38 @@ func (nr *mysqlUsersRepository) Update(id int, user *users.User) (*users.User, e
 }
 
 func (nr *mysqlUsersRepository) Store(user *users.User) (*users.User, error) {
-	return user, nil
+	rec := fromDomain(*user)
+
+	result := nr.DB.Create(rec);
+
+	if result.Error != nil {
+		return user, result.Error
+	}
+
+	res := rec.toDomain()
+
+	return &res, nil
 }
 
-func (nr *mysqlUsersRepository) Delete(Id int, user *users.User) (*users.User, error) {
-	return user, nil
+func (nr *mysqlUsersRepository) Delete(Id int) error {
+	user := Users{}
+
+	user.ID = uint(Id)
+	
+
+	if err := nr.DB.Unscoped().Delete(&user).Error; err != nil {
+		return err
+	}
+
+	return nil
+}
+
+func (nr *mysqlUsersRepository) GetValidUser(email, password string) (*users.User, error) {
+	user := users.User{}
+
+	if err := nr.DB.Unscoped().Where("email = ? AND password = ?", email, password).First(&user).Error; err != nil {
+		return &users.User{}, err
+	}
+
+	return &user, nil
 }
