@@ -15,8 +15,6 @@ type AddUser struct {
 	Password  string `json:"password"`
 }
 
-type UpdateUser struct {
-}
 
 func ToDomain(request AddUser) *users.User {
 	return &users.User{

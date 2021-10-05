@@ -1,18 +1,38 @@
 package films
 
-import "time"
+//import "time"
 
 type Film struct {
 	Id          int
 	Title       string
-	CategoryId  int
-	ActorId     int
-	Languages   string
 	Description string
-	ReleaseYear time.Time
+	ReleaseDate string
 	Rating      float32
 	Price       int
-	Duration    time.Duration
+	Adult       bool
+	Genres      []Genre `gorm:"foreignKey:Id"`
+	Languages   string
 }
 
+type Genre struct {
+	Id   int 
+	Name string
+}
 
+// type Language struct {
+// 	Kode string `gorm:"unique"`
+// 	Name string
+// }
+
+type FilmUseCase interface {
+	GetPopularFilms() (*[]Film, error)
+}
+
+type FilmRepository interface {
+	GetFilm() (*[]Film, error)
+	StoreFilm(film *Film) (*Film, error)
+}
+
+type FilmFromAPI interface {
+	GetFilmFromAPI() []Film
+}

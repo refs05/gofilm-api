@@ -43,6 +43,10 @@ func (caseUser *serviceUsers) CreateToken(email, password string) (string, error
 }
 
 func (caseUser *serviceUsers) GetByID(id int) (*User, error) {
+	if id <= 0 {
+		return &User{}, bussinesses.ErrIDNotFound
+	}
+
 	result, err :=  caseUser.repository.GetByID(id)
 
 	if err != nil {

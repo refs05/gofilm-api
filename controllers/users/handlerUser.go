@@ -2,11 +2,12 @@ package users
 
 import (
 	//"fmt"
+	//"gofilm/bussinesses/genres"
 	"gofilm/bussinesses/users"
 	"gofilm/controllers"
 	"gofilm/controllers/users/request"
 	"gofilm/controllers/users/response"
-	
+
 	"net/http"
 	"strconv"
 
@@ -15,11 +16,13 @@ import (
 
 type Presenter struct {
 	serviceUser users.UserUseCase
+	//serviceGenre genres.GenreUseCase
 }
 
 func NewHandler(userServ users.UserUseCase) *Presenter {
 	return &Presenter{
 		serviceUser: userServ,
+		//serviceGenre: genreServ,
 	}
 }
 
@@ -97,3 +100,4 @@ func (handler *Presenter) CreateToken(c echo.Context) error {
 	
 	return controllers.NewSuccessResponse(c, response)
 }
+
