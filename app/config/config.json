@@ -1,0 +1,20 @@
+{
+    "debug": true,
+    "server": {
+        "address": "localhost:8000"
+    },
+    "context": {
+        "timeout": 2
+    },
+    "database": {
+        "host": "0.0.0.0",
+        "port": "3306",
+        "user": "root",
+        "pass": "BavarianRestu2002",
+        "name": "gofilm"
+    },
+    "jwt": {
+        "secret": "supersecret6666!@#$%",
+        "expired": 12
+    }
+}

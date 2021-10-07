@@ -20,7 +20,7 @@ func NewConsumeAPI() films.FilmFromAPI {
 	}
 }
 
-func (consapi *ConsumeAPI) GetFilmFromAPI() []films.Film {
+func (consapi *ConsumeAPI) GetFilmFromAPI() []films.Convert {
 	response, err := http.Get("https://api.themoviedb.org/3/movie/top_rated?api_key=8b350baf5225dd7930c5b98d510101bb&page=1")
 	if err != nil {
 		fmt.Print(err.Error())
@@ -34,11 +34,10 @@ func (consapi *ConsumeAPI) GetFilmFromAPI() []films.Film {
 
 	var responseObject Response
     json.Unmarshal(responseData, &responseObject)
-
-	var resp []films.Film
+	
+	var resp []films.Convert
 	for i:=0; i< len(responseObject.Films); i++ {
 		resp = append(resp, ToDomain(responseObject.Films[i]))
 	}
-
 	return resp
 }

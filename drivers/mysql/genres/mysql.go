@@ -2,7 +2,6 @@ package genres
 
 import (
 	"gofilm/bussinesses/genres"
-
 	"gorm.io/gorm"
 )
 
@@ -30,7 +29,7 @@ func (nr *mysqlGenresRepository) StoreGenre(genre *genres.Genre) (*genres.Genre,
 	return &res, nil 
 } 
 
-func (nr *mysqlGenresRepository) GetGenre() (*[]genres.Genre, error) {
+func (nr *mysqlGenresRepository) GetGenres() (*[]genres.Genre, error) {
 	var genres []genres.Genre
 
 	err := nr.DB.Unscoped().Find(&genres).Error
@@ -39,4 +38,14 @@ func (nr *mysqlGenresRepository) GetGenre() (*[]genres.Genre, error) {
 	}
 
 	return &genres, nil
+}
+
+func (nr *mysqlGenresRepository) GetGenreById(id int) (*genres.Genre, error) {
+	var genre genres.Genre
+
+	err := nr.DB.Where("id = ?", id).First(&genre).Error;
+	if err != nil {
+		return &genres.Genre{}, err
+	}
+	return &genre, nil
 }

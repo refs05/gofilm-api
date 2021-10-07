@@ -2,7 +2,6 @@ package films
 
 import (
 	"gofilm/bussinesses/films"
-
 	"gorm.io/gorm"
 )
 
@@ -25,6 +24,11 @@ func (nr *mysqlFilmsRepository) StoreFilm(film *films.Film) (*films.Film, error)
 		return film, result.Error
 	}
 
+	price := nr.DB.Model(&Films{}).Where("price = ?", 0).UpdateColumn("price", 100000)
+	if price.Error != nil {
+		return film, price.Error
+	}
+
 	res := rec.toDomain()
 
 	return &res, nil
@@ -40,3 +44,12 @@ func (nr *mysqlFilmsRepository) GetFilm() (*[]films.Film, error) {
 
 	return &films, nil
 }
+
+// func (nr *mysqlFilmsRepository) Update(id int, user *users.User) (*users.User, error) {
+
+// 	err := nr.DB.Model(&user).Where("id = ?", id).Updates(&user).Error;
+// 	if err != nil {
+// 		return &users.User{}, err
+// 	}
+// 	return user, err
+// }

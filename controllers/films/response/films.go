@@ -1,6 +1,8 @@
 package response
 
-import "gofilm/bussinesses/films"
+import (
+	"gofilm/bussinesses/films"
+)
 
 type Films struct {
 	Id          int
@@ -10,29 +12,25 @@ type Films struct {
 	Rating      float32
 	Price       int
 	Adult       bool
-	Genres      []Genre
+	Genres      []int
 	Languages   string
 }
 
-type Genre struct {
-	Id   int
-	Name string
-}
-
 func ResponseFilms(domain films.Film) Films {
-	var res []Genre
+	var res []int
 	for i := 0; i < len(domain.Genres); i++ {
-		res = append(res, Genre(domain.Genres[i]))
+		res = append(res, domain.Genres[i].Id)
 	}
 	return Films{
 		Id:          domain.Id,
 		Title:       domain.Title,
 		Description: domain.Description,
+		ReleaseDate: domain.ReleaseDate,
 		Rating:      domain.Rating,
 		Price:       domain.Price,
 		Adult:       domain.Adult,
 		Genres:      res,
-		Languages:   domain.Languages,
+		Languages:   domain.LanguagesKode,
 	}
 }
 

@@ -2,8 +2,6 @@ package genres
 
 import "gofilm/bussinesses/genres"
 
-//import "gofilm/bussinesses/genres"
-
 type Genres struct {
 	Id int `gorm:"unique"`
 	Name string

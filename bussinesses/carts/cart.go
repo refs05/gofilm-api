@@ -7,8 +7,7 @@ type Cart struct {
 	Total  int
 	Is_pay bool
 	Films  []Film
-	UserId int
-	User   User
+	UserID int
 }
 
 type Film struct {
@@ -45,9 +44,14 @@ type User struct {
 
 type CartUseCase interface {
 	GetCartByUser(userID int) (*Cart, error)
+	// UpdateCartUser(userID int) (*Cart, error)
+	// DeleteCart(userID int) (*Cart, error)
+	// CreateCart() (*Cart, error)
 }
 
 type CartRepository interface {
 	GetCartByUser(userID int) (*Cart, error)
 	StoreCart(cart *Cart) (*Cart, error)
+	//UpdateCart(userID int) (*Cart, error)
+	//DeleteCart(userID int) (*Cart, error)
 }

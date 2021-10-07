@@ -1,7 +1,5 @@
 package films
 
-//import "time"
-
 type Film struct {
 	Id          int
 	Title       string
@@ -11,7 +9,7 @@ type Film struct {
 	Price       int
 	Adult       bool
 	Genres      []Genre `gorm:"foreignKey:Id"`
-	Languages   string
+	LanguagesKode   string
 }
 
 type Genre struct {
@@ -19,10 +17,17 @@ type Genre struct {
 	Name string
 }
 
-// type Language struct {
-// 	Kode string `gorm:"unique"`
-// 	Name string
-// }
+type Convert struct {
+	Id          int
+	Title       string
+	Description string
+	ReleaseDate string
+	Rating      float32
+	Price       int
+	Adult       bool
+	Genres      []int `gorm:"foreignKey:Id"`
+	LanguagesKode   string
+}
 
 type FilmUseCase interface {
 	GetPopularFilms() (*[]Film, error)
@@ -34,5 +39,9 @@ type FilmRepository interface {
 }
 
 type FilmFromAPI interface {
-	GetFilmFromAPI() []Film
+	GetFilmFromAPI() []Convert
+}
+
+type FilmGenre interface {
+	GetGenreById(id int) (*Genre, error)
 }

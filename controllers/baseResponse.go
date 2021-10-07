@@ -2,7 +2,6 @@ package controllers
 
 import (
 	"net/http"
-
 	echo "github.com/labstack/echo/v4"
 )
 
