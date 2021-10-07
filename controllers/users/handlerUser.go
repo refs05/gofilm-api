@@ -16,13 +16,11 @@ import (
 
 type Presenter struct {
 	serviceUser users.UserUseCase
-	//serviceGenre genres.GenreUseCase
 }
 
 func NewHandler(userServ users.UserUseCase) *Presenter {
 	return &Presenter{
 		serviceUser: userServ,
-		//serviceGenre: genreServ,
 	}
 }
 
@@ -51,7 +49,7 @@ func (handler *Presenter) Update(e echo.Context) error {
 	}
 
 	domain := request.ToDomain(req)
-	id, _ := strconv.Atoi(e.Param("id"))
+	id, _ := strconv.Atoi(e.QueryParam("id"))
 
 	resp, err := handler.serviceUser.Update(id, domain)
 	if err != nil {
@@ -62,7 +60,7 @@ func (handler *Presenter) Update(e echo.Context) error {
 }
 
 func (handler *Presenter) Delete(e echo.Context) error {
-	id, _ := strconv.Atoi(e.Param("id"))
+	id, _ := strconv.Atoi(e.QueryParam("id"))
 
 	err := handler.serviceUser.Delete(id)
 	if err != nil {
@@ -73,7 +71,7 @@ func (handler *Presenter) Delete(e echo.Context) error {
 }
 
 func (handler *Presenter) GetByID(e echo.Context) error {
-	id, _ := strconv.Atoi(e.Param("id"))
+	id, _ := strconv.Atoi(e.QueryParam("id"))
 
 	resp, err := handler.serviceUser.GetByID(id)
 	if err != nil {

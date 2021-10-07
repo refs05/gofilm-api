@@ -21,7 +21,6 @@ type Films struct {
 type Genres struct {
 	Id  int `gorm:"unique;primaryKey"`
 	Name string
-	
 }
 
 type Languages struct {
@@ -30,12 +29,10 @@ type Languages struct {
 }
 
 func fromDomain(filmDomain films.Film) *Films {
-	// var langFromDomain []Languages
-	// for i := 0; i < len(filmDomain.Languages); i++ {
-	// 	langFromDomain = append(langFromDomain, Languages(filmDomain.Languages[i]))
-	// }
+	
 	var genreFromDomain []Genres
 	for i := 0; i < len(filmDomain.Genres); i++ {
+		
 		genreFromDomain = append(genreFromDomain, Genres(filmDomain.Genres[i]))
 	}
 	return &Films{
@@ -46,18 +43,15 @@ func fromDomain(filmDomain films.Film) *Films {
 		Rating:        filmDomain.Rating,
 		Price:         filmDomain.Price,
 		Adult:         filmDomain.Adult,
-		LanguagesKode: filmDomain.Languages,
-		Genres:        genreFromDomain,
+		LanguagesKode: filmDomain.LanguagesKode,
+		Genres:       genreFromDomain,
 	}
 }
 
 func (rec *Films) toDomain() films.Film {
-	// var langToDomain []films.Language
-	// for i := 0; i < len(rec.Languages); i++ {
-	// 	langToDomain = append(langToDomain, films.Language(rec.Languages[i]))
-	// }
 	var genreToDomain []films.Genre
 	for i := 0; i < len(rec.Genres); i++ {
+		
 		genreToDomain = append(genreToDomain, films.Genre(rec.Genres[i]))
 	}
 	return films.Film{
@@ -68,7 +62,7 @@ func (rec *Films) toDomain() films.Film {
 		Rating:      rec.Rating,
 		Price:       rec.Price,
 		Adult:       rec.Adult,
-		Languages:   rec.LanguagesKode,
+		LanguagesKode:   rec.LanguagesKode,
 		Genres:      genreToDomain,
 	}
 }

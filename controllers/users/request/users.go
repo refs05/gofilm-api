@@ -2,7 +2,6 @@ package request
 
 import (
 	"gofilm/bussinesses/users"
-	//"github.com/golang-jwt/jwt/request"
 )
 
 type AddUser struct {

@@ -1,15 +1,11 @@
 package users
 
 import (
-	//"fmt"
 	"gofilm/app/middleware"
 	"gofilm/bussinesses"
-	//"gofilm/helpers/encrypt"
-//	"log"
 	"strings"
 )
 
-//"gofilm/bussinesses"
 type serviceUsers struct {
 	repository UserRepository
 	jwtAuth *middleware.ConfigJWT
@@ -33,11 +29,6 @@ func (caseUser *serviceUsers) CreateToken(email, password string) (string, error
 		return "", err
 	}
 	
-
-	// if !encrypt.ValidateHash(password, userDomain.Password) {
-	// 	return "", bussinesses.ErrInternalServer
-	// }
-
 	token := caseUser.jwtAuth.GenerateToken(userDomain.Id)
 	return token, nil
 }

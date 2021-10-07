@@ -29,9 +29,19 @@ func (caseGenre *serviceGenres) GetGenres() (*[]Genre, error) {
 		fmt.Print(result)
     }
 
-	genres, err := caseGenre.repository.GetGenre()
+	genres, err := caseGenre.repository.GetGenres()
 	if err != nil {
 		return nil, err
 	} 
 	return genres, nil
+}
+
+func (caseGenre *serviceGenres) GetGenreById(id int) (*Genre, error) {
+
+	result, err := caseGenre.repository.GetGenreById(id)
+	if err != nil {
+		return &Genre{}, err
+	}
+
+	return result, nil
 }

@@ -7,10 +7,12 @@ type Genre struct {
 
 type GenreUseCase interface {
 	GetGenres() (*[]Genre, error)
+	GetGenreById(id int) (*Genre, error)
 }
 
 type GenreRepository interface {
-	GetGenre() (*[]Genre, error)
+	GetGenres() (*[]Genre, error)
+	GetGenreById(id int) (*Genre, error)
 	StoreGenre(genre *Genre) (*Genre, error)
 }
 
