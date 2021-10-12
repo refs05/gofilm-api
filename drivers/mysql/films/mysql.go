@@ -34,6 +34,8 @@ func (nr *mysqlFilmsRepository) StoreFilm(film *films.Film) (*films.Film, error)
 	return &res, nil
 }
 
+//perlu fix
+
 func (nr *mysqlFilmsRepository) GetFilm() (*[]films.Film, error) {
 	var films []films.Film
 
@@ -53,3 +55,12 @@ func (nr *mysqlFilmsRepository) GetFilm() (*[]films.Film, error) {
 // 	}
 // 	return user, err
 // }
+
+func (nr *mysqlFilmsRepository) GetFilmByID(id int) (*films.Film, error) {
+	film := films.Film{}
+	err := nr.DB.Where("id = ?", id).First(&film).Error
+	if err != nil {
+		return &films.Film{}, err
+	}
+	return &film, nil
+}

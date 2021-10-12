@@ -31,10 +31,12 @@ type Convert struct {
 
 type FilmUseCase interface {
 	GetPopularFilms() (*[]Film, error)
+	GetFilmByID(id int) (*Film, error)
 }
 
 type FilmRepository interface {
 	GetFilm() (*[]Film, error)
+	GetFilmByID(id int) (*Film, error)
 	StoreFilm(film *Film) (*Film, error)
 }
 

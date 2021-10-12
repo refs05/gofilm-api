@@ -6,31 +6,24 @@ import (
 )
 
 type Carts struct {
-	Id     int
+	Id     int `gorm:"primaryKey"`
 	Total  int
 	Is_pay bool
-	Films  []Film
+	Films  []Film `gorm:"many2many:cart_films;foreignKey:Id"`
 	UserId int
-	User   User
 }
 
 type Film struct {
-	Id          int
+	Id          int `gorm:"unique;primaryKey"`
 	Title       string
 	Description string
 	ReleaseDate string
 	Rating      float32
 	Price       int
 	Adult       bool
-	Genres      []Genre
-	Languages   string
-	CartID      int
+	LanguagesKode   string
 }
 
-type Genre struct {
-	Id   int
-	Name string
-}
 
 type User struct {
 	Id        int
@@ -47,21 +40,29 @@ type User struct {
 }
 
 func (rec *Carts) toDomain() carts.Cart {
+	var filmToDomain []carts.Film
+	for i := 0; i < len(rec.Films); i++ {
+		filmToDomain = append(filmToDomain, carts.Film(rec.Films[i]))
+	}
 	return carts.Cart{
 		Id: rec.Id,
 		Total: rec.Total,
 		Is_pay: rec.Is_pay,
-		//film[]
-		//userId
+		Films: filmToDomain,
+		UserID: rec.UserId,
 	}
 }
 
 func fromDomain(cartDomain carts.Cart) *Carts {
+	var filmFromDomain []Film
+	for i:=0; i < len(cartDomain.Films); i++ {
+		filmFromDomain = append(filmFromDomain, Film(cartDomain.Films[i]))
+	}
 	return &Carts{
 		Id: cartDomain.Id,
 		Total: cartDomain.Total,
 		Is_pay: cartDomain.Is_pay,
-		//film[]
-		//userId
+		Films: filmFromDomain,
+		UserId: cartDomain.UserID,
 	}
 }
