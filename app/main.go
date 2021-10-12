@@ -7,6 +7,10 @@ import (
 	_userHandler "gofilm/controllers/users"
 	_userRepo "gofilm/drivers/mysql/users"
 
+	_cartServ "gofilm/bussinesses/carts"
+	_cartHandler "gofilm/controllers/carts"
+	_cartRepo "gofilm/drivers/mysql/carts"
+
 	_genreServ "gofilm/bussinesses/genres"
 	_genreHandler "gofilm/controllers/genres"
 	_genreRepo "gofilm/drivers/mysql/genres"
@@ -51,6 +55,7 @@ func dbMigrate(db *gorm.DB) {
 		&_genreRepo.Genres{},
 		&_languageRepo.Languages{},
 		&_filmsRepo.Films{},
+		&_cartRepo.Carts{},
 	)
 }
 
@@ -94,12 +99,17 @@ func main() {
 	filmsService := _filmsServ.NewService(filmsRepo, filmsThird, genresService)
 	filmsHandler := _filmsHandler.NewHandler(filmsService)
 
+	cartsRepo := _cartRepo.NewMySQLRepo(db)
+	cartsService := _cartServ.NewService(cartsRepo, filmsService)
+	cartsHandler := _cartHandler.NewHandler(cartsService) 
+
 	routesInit := _routes.HandlerList{
 		JWTMiddleware: configJWT.Init(),
 		UserHandler:   *usersHandler,
 		GenreHandler:  *genresHandler,
 		LanguageHandler: *langsHandler,
 		FilmHandler: *filmsHandler,
+		CartHandler: *cartsHandler,
 	}
 
 	routesInit.RouteUser(e)

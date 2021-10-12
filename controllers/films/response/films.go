@@ -5,21 +5,21 @@ import (
 )
 
 type Films struct {
-	Id          int
-	Title       string
-	Description string
-	ReleaseDate string
-	Rating      float32
-	Price       int
-	Adult       bool
-	Genres      []int
-	Languages   string
+	Id          int `json:"id"`
+	Title       string `json:"title"`
+	Description string `json:"description"`
+	ReleaseDate string `json:"release_date"`
+	Rating      float32 `json:"rating"`
+	Price       int `json:"price"`
+	Adult       bool `json:"adult"`
+	Genres      []int `json:"genres"`
+	Languages   string `json:"languages"`
 }
 
 func ResponseFilms(domain films.Film) Films {
 	var res []int
 	for i := 0; i < len(domain.Genres); i++ {
-		res = append(res, domain.Genres[i].Id)
+		res = append(res, int(domain.Genres[i].Id))
 	}
 	return Films{
 		Id:          domain.Id,

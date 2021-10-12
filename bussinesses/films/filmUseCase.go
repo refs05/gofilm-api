@@ -2,6 +2,7 @@ package films
 
 import (
 	"fmt"
+	"gofilm/bussinesses"
 	"gofilm/bussinesses/genres"
 )
 
@@ -61,4 +62,17 @@ func (caseFilm *serviceFilms) GetPopularFilms() (*[]Film, error) {
 		return nil, err
 	} 
 	return genres, nil
+}
+
+func (caseFilm *serviceFilms) GetFilmByID(id int) (*Film, error) {
+	if id <= 0 {
+		return &Film{}, bussinesses.ErrIDNotFound
+	}
+
+	result, err := caseFilm.repository.GetFilmByID(id)
+	if err != nil {
+		return &Film{}, err
+	}
+
+	return result, nil
 }

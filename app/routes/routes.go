@@ -1,11 +1,12 @@
 package routes
 
 import (
-	"gofilm/controllers/actors"
+	"gofilm/controllers/carts"
 	"gofilm/controllers/films"
 	"gofilm/controllers/genres"
 	"gofilm/controllers/languages"
 	"gofilm/controllers/users"
+
 	"github.com/labstack/echo/v4"
 	"github.com/labstack/echo/v4/middleware"
 )
@@ -14,9 +15,9 @@ type HandlerList struct {
 	JWTMiddleware middleware.JWTConfig
 	UserHandler users.Presenter
 	GenreHandler genres.Presenter
-	ActorHandler actors.Presenter
 	LanguageHandler languages.Presenter
 	FilmHandler films.Presenter
+	CartHandler carts.Presenter
 }
 
 func (handler *HandlerList) RouteUser(e *echo.Echo) {
@@ -37,5 +38,8 @@ func (handler *HandlerList) RouteUser(e *echo.Echo) {
 
 	films := e.Group("/toprated")
 	films.GET("", handler.FilmHandler.GetFilms)
+
+	carts := e.Group("/carts")
+	carts.POST("/add", handler.CartHandler.Insert)
 }
 
