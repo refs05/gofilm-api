@@ -7,5 +7,5 @@ import (
 type Payment struct {
 	Id int
 	Verif bool
-	//belumlengkap
+	CartID int
 }
