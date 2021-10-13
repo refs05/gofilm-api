@@ -5,6 +5,7 @@ import (
 	"gofilm/controllers/films"
 	"gofilm/controllers/genres"
 	"gofilm/controllers/languages"
+	"gofilm/controllers/payments"
 	"gofilm/controllers/users"
 
 	"github.com/labstack/echo/v4"
@@ -18,6 +19,7 @@ type HandlerList struct {
 	LanguageHandler languages.Presenter
 	FilmHandler films.Presenter
 	CartHandler carts.Presenter
+	PaymentHandler payments.Presenter
 }
 
 func (handler *HandlerList) RouteUser(e *echo.Echo) {
@@ -41,5 +43,8 @@ func (handler *HandlerList) RouteUser(e *echo.Echo) {
 
 	carts := e.Group("/carts")
 	carts.POST("/add", handler.CartHandler.Insert)
+
+	payments := e.Group("/payments")
+	payments.POST("/validate", handler.PaymentHandler.Validate)
 }
 

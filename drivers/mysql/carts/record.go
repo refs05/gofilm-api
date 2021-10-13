@@ -14,16 +14,15 @@ type Carts struct {
 }
 
 type Film struct {
-	Id          int `gorm:"unique;primaryKey"`
-	Title       string
-	Description string
-	ReleaseDate string
-	Rating      float32
-	Price       int
-	Adult       bool
-	LanguagesKode   string
+	Id            int `gorm:"unique;primaryKey"`
+	Title         string
+	Description   string
+	ReleaseDate   string
+	Rating        float32
+	Price         int
+	Adult         bool
+	LanguagesKode string
 }
-
 
 type User struct {
 	Id        int
@@ -45,24 +44,24 @@ func (rec *Carts) toDomain() carts.Cart {
 		filmToDomain = append(filmToDomain, carts.Film(rec.Films[i]))
 	}
 	return carts.Cart{
-		Id: rec.Id,
-		Total: rec.Total,
+		Id:     rec.Id,
+		Total:  rec.Total,
 		Is_pay: rec.Is_pay,
-		Films: filmToDomain,
+		Films:  filmToDomain,
 		UserID: rec.UserId,
 	}
 }
 
 func fromDomain(cartDomain carts.Cart) *Carts {
 	var filmFromDomain []Film
-	for i:=0; i < len(cartDomain.Films); i++ {
+	for i := 0; i < len(cartDomain.Films); i++ {
 		filmFromDomain = append(filmFromDomain, Film(cartDomain.Films[i]))
 	}
 	return &Carts{
-		Id: cartDomain.Id,
-		Total: cartDomain.Total,
+		Id:     cartDomain.Id,
+		Total:  cartDomain.Total,
 		Is_pay: cartDomain.Is_pay,
-		Films: filmFromDomain,
+		Films:  filmFromDomain,
 		UserId: cartDomain.UserID,
 	}
 }
