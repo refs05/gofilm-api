@@ -1,6 +1,6 @@
 package carts
 
-import "time"
+//import "time"
 
 type Cart struct {
 	Id     int
@@ -29,25 +29,12 @@ type Film struct {
 	LanguagesKode   string
 }
 
-type User struct {
-	Id        int
-	Address   string
-	FirstName string
-	LastName  string
-	Age       int
-	NoHp      string
-	Email     string
-	Password  string
-	CreatedAt time.Time
-	UpdatedAt time.Time
-	DeletedAt time.Time
-}
-
 type CartUseCase interface {
 	GetCartByUser(userID int) (*Cart, error)
 	UpdateCartUser(userID int, cart *Cart) (*Cart, error)
 	DeleteCartUser(userID int) error
 	CreateCartUser(cart *Convert) (*Cart, error)
+	GetCartByID(id int) (*Cart, error)
 }
 
 type CartRepository interface {
@@ -55,4 +42,5 @@ type CartRepository interface {
 	StoreCart(cart *Cart) (*Cart, error)
 	UpdateCart(userID int, cart *Cart) (*Cart, error)
 	DeleteCart(userID int) error
+	GetCartByID(id int) (*Cart, error)
 }  

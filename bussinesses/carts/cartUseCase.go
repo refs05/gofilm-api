@@ -78,3 +78,16 @@ func (caseCart *serviceCarts) CreateCartUser(cart *Convert) (*Cart, error) {
 	}
 	return result, nil
 }
+
+func (caseCart *serviceCarts) GetCartByID(id int) (*Cart, error) {
+	if id <= 0 {
+		return &Cart{}, bussinesses.ErrIDNotFound
+	}
+
+	result, err := caseCart.repository.GetCartByUser(id)
+	if err != nil {
+		return &Cart{}, err
+	}
+
+	return result, nil
+}
