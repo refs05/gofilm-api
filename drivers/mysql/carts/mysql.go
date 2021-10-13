@@ -18,7 +18,7 @@ func NewMySQLRepo(db *gorm.DB) carts.CartRepository {
 
 func (nr *mysqlCartsRepository) GetCartByUser(userID int) (*carts.Cart, error) {
 	cart := carts.Cart{}
-	err := nr.DB.Where("UserId = ?", userID).First(&cart).Error
+	err := nr.DB.Where("UserID = ?", userID).First(&cart).Error
 	if err != nil {
 		return &carts.Cart{}, err
 	}
@@ -55,7 +55,12 @@ func (nr *mysqlCartsRepository) DeleteCart(userID int) error {
 	return nil
 }
 
-// GetCartByUser(userID int) (*Cart, error)
-// 	StoreCart(cart *Cart) (*Cart, error)
-// 	UpdateCart(userID int, cart *Cart) (*Cart, error)
-// 	DeleteCart(userID int) (*Cart, error)
+func (nr *mysqlCartsRepository) GetCartByID(id int) (*carts.Cart, error) {
+	cart := carts.Cart{}
+	err := nr.DB.Where("id = ?", id).First(&cart).Error
+	if err != nil {
+		return &carts.Cart{}, err
+	}
+	return &cart, nil
+}
+
