@@ -6,7 +6,7 @@ type Cart struct {
 	Id     int
 	Total  int
 	Is_pay bool
-	Films  []Film 
+	Films  []Film `gorm:"foreignKey:id"`
 	UserID int
 }
 
@@ -19,7 +19,7 @@ type Convert struct {
 }
 
 type Film struct {
-	Id          int
+	Id          int 
 	Title       string
 	Description string
 	ReleaseDate string
@@ -35,6 +35,8 @@ type CartUseCase interface {
 	DeleteCartUser(userID int) error
 	CreateCartUser(cart *Convert) (*Cart, error)
 	GetCartByID(id int) (*Cart, error)
+	ChangeStatus(cartID int) error
+	GetFilmUser(id int) (*Cart, error)
 }
 
 type CartRepository interface {
@@ -43,4 +45,6 @@ type CartRepository interface {
 	UpdateCart(userID int, cart *Cart) (*Cart, error)
 	DeleteCart(userID int) error
 	GetCartByID(id int) (*Cart, error)
+	ChangeStatus(id int) error
+	GetFilmUser(id int) (*Cart, error)
 }  

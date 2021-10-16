@@ -1,6 +1,7 @@
 package payments
 
 import (
+	//"gofilm/bussinesses"
 	"gofilm/bussinesses/payments"
 
 	"gorm.io/gorm"
@@ -18,7 +19,12 @@ func NewMySQLRepo(db *gorm.DB) payments.PaymentRepository {
 
 func (nr *mysqlPaymentsRepository) ChangeStatus(payment *payments.Payment) (*payments.Payment, error) {
 	rec := fromDomain(*payment)
-	rec.Verif = true
+	//if rec.Verif != true {
+		rec.Verif = true
+	// } else {
+	// 	return payment, bussinesses.ErrDuplicateData
+	// }
+	
 	result := nr.DB.Create(rec)
 	if result.Error != nil {
 		return payment, result.Error

@@ -15,6 +15,10 @@ import (
 	_paymentHandler "gofilm/controllers/payments"
 	_paymentRepo "gofilm/drivers/mysql/payments"
 
+	_collectionServ "gofilm/bussinesses/collections"
+	_collectionHandler "gofilm/controllers/collections"
+	_collectionRepo "gofilm/drivers/mysql/collections"
+
 	_genreServ "gofilm/bussinesses/genres"
 	_genreHandler "gofilm/controllers/genres"
 	_genreRepo "gofilm/drivers/mysql/genres"
@@ -61,6 +65,7 @@ func dbMigrate(db *gorm.DB) {
 		&_filmsRepo.Films{},
 		&_cartRepo.Carts{},
 		&_paymentRepo.Payments{},
+		&_collectionRepo.Collections{},
 	)
 }
 
@@ -108,8 +113,12 @@ func main() {
 	cartsService := _cartServ.NewService(cartsRepo, filmsService)
 	cartsHandler := _cartHandler.NewHandler(cartsService) 
 
+	collectionRepo := _collectionRepo.NewMySQLRepo(db)
+	collectionService := _collectionServ.NewService(collectionRepo, cartsService)
+	collectionHandler := _collectionHandler.NewHandler(collectionService)
+
 	paymentsRepo := _paymentRepo.NewMySQLRepo(db)
-	paymentsService := _paymentServ.NewService(paymentsRepo, cartsService)
+	paymentsService := _paymentServ.NewService(paymentsRepo, cartsService, collectionService)
 	paymentsHandler := _paymentHandler.NewHandler(paymentsService)
 
 	routesInit := _routes.HandlerList{
@@ -120,6 +129,7 @@ func main() {
 		FilmHandler: *filmsHandler,
 		CartHandler: *cartsHandler,
 		PaymentHandler: *paymentsHandler,
+		CollectionHandler: *collectionHandler,
 	}
 
 	routesInit.RouteUser(e)
