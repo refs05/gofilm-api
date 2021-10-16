@@ -1,24 +1,38 @@
 package payments
 
-import "gofilm/bussinesses/carts"
+import (
+	"fmt"
+	"gofilm/bussinesses/carts"
+	"gofilm/bussinesses/collections"
+)
 
 type servicePayments struct {
 	repository PaymentRepository
 	repoCart carts.CartUseCase
+	repoCollection collections.CollectionUseCase
 }
 
-func NewService(repoPayment PaymentRepository, repoCart carts.CartUseCase) PaymentUseCase {
+func NewService(repoPayment PaymentRepository, repoCart carts.CartUseCase, repoCollection collections.CollectionUseCase) PaymentUseCase {
 	return &servicePayments {
 		repository: repoPayment,
 		repoCart: repoCart,
+		repoCollection: repoCollection,
 	}
 }
 
-func (caseCart *servicePayments) ValidatePayment(payment *Payment) (*Payment, error) {                                                
-	result, err := caseCart.repository.ChangeStatus(payment)
+func (casePayment *servicePayments) ValidatePayment(cartID int, payment *Payment) (*Payment, error) {                                                
+	result, err := casePayment.repository.ChangeStatus(payment)
 	if err != nil {
 		return &Payment{}, err
 	}
+	statusCart := casePayment.repoCart.ChangeStatus(cartID)
+	fmt.Print(statusCart)
+	storeFilm, err := casePayment.repoCollection.StoreCollection(cartID)
+	fmt.Print(storeFilm)
+	if err != nil {
+		return &Payment{}, err
+	}
+	
 	return result, nil
 }
 
@@ -29,3 +43,5 @@ func (caseCart *servicePayments) CheckCart(CartID int) (*Payment, error) {
 	}
 	return &Payment{}, nil
 }
+
+//error untuk store film ke koleksi

@@ -1,6 +1,7 @@
 package carts
 
 import (
+	"fmt"
 	"gofilm/bussinesses"
 	"gofilm/bussinesses/films"
 )
@@ -85,6 +86,34 @@ func (caseCart *serviceCarts) GetCartByID(id int) (*Cart, error) {
 	}
 
 	result, err := caseCart.repository.GetCartByUser(id)
+	if err != nil {
+		return &Cart{}, err
+	}
+
+	return result, nil
+}
+
+func (caseCart *serviceCarts) ChangeStatus(cartID int) error {
+	if cartID <= 0 {
+		return bussinesses.ErrIDNotFound
+	}
+
+	result := caseCart.repository.ChangeStatus(cartID)
+	if result != nil {
+		fmt.Print(result)
+	}
+	// if result != nil {
+	// 	return 
+	// }
+	return nil
+}
+
+func (caseCart *serviceCarts) GetFilmUser(id int) (*Cart, error) {
+	if id <= 0 {
+		return &Cart{}, bussinesses.ErrIDNotFound
+	}
+
+	result, err := caseCart.repository.GetFilmUser(id)
 	if err != nil {
 		return &Cart{}, err
 	}

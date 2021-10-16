@@ -2,6 +2,7 @@ package routes
 
 import (
 	"gofilm/controllers/carts"
+	"gofilm/controllers/collections"
 	"gofilm/controllers/films"
 	"gofilm/controllers/genres"
 	"gofilm/controllers/languages"
@@ -20,6 +21,7 @@ type HandlerList struct {
 	FilmHandler films.Presenter
 	CartHandler carts.Presenter
 	PaymentHandler payments.Presenter
+	CollectionHandler collections.Presenter
 }
 
 func (handler *HandlerList) RouteUser(e *echo.Echo) {
@@ -46,5 +48,8 @@ func (handler *HandlerList) RouteUser(e *echo.Echo) {
 
 	payments := e.Group("/payments")
 	payments.POST("/validate", handler.PaymentHandler.Validate)
+
+	collections := e.Group("/collection")
+	collections.POST("/film", handler.CollectionHandler.GetByUserID)
 }
 
