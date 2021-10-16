@@ -31,7 +31,7 @@ func (handler *Presenter) Validate(e echo.Context) error {
 	// 	return e.JSON(http.StatusInternalServerError, "Keranjang Anda Tidak Ada")
 	// }
 
-	resp, err := handler.servicePayment.ValidatePayment(domain)
+	resp, err := handler.servicePayment.ValidatePayment(domain.CartID, domain)
 	if err != nil {
 		return e.JSON(http.StatusInternalServerError, "Server Interval Error")
 	}

@@ -64,3 +64,20 @@ func (nr *mysqlCartsRepository) GetCartByID(id int) (*carts.Cart, error) {
 	return &cart, nil
 }
 
+func (nr *mysqlCartsRepository) ChangeStatus(id int) error {
+	cart := carts.Cart{}
+	err := nr.DB.Model(&cart).Where("Id = ?", id).Update("Is_pay", true).Error
+	if err != nil {
+		return err
+	}
+	return nil
+}
+
+func (nr *mysqlCartsRepository) GetFilmUser(id int) (*carts.Cart, error) {
+	cart := carts.Cart{}
+	err := nr.DB.Where("id = ? AND Is_pay = ?", id, true).First(&cart).Error
+	if err != nil {
+		return &carts.Cart{}, err
+	}
+	return &cart, nil
+}

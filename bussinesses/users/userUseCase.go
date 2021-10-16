@@ -3,7 +3,7 @@ package users
 import (
 	"gofilm/app/middleware"
 	"gofilm/bussinesses"
-	"strings"
+	//"strings"
 )
 
 type serviceUsers struct {
@@ -20,10 +20,6 @@ func NewService(repoUser UserRepository, jwtauth *middleware.ConfigJWT) UserUseC
 
 func (caseUser *serviceUsers) CreateToken(email, password string) (string, error) {
 	
-	if strings.TrimSpace(email) == "" && strings.TrimSpace(password) == "" {
-		return "", bussinesses.ErrEmailPasswordNotFound
-	}
-
 	userDomain, err := caseUser.repository.GetValidUser(email, password)
 	if err != nil {
 		return "", err
@@ -65,13 +61,13 @@ func (caseUser *serviceUsers) Store(user *User) (*User, error) {
 
 func (caseUser *serviceUsers) Delete(id int) error {
 	
-	//_, err := caseUser.repository.GetByID(id)
-	// if err != nil {
-	// 	return err
-	// }
+	err := caseUser.repository.Delete(id)
+	if err != nil {
+		return err
+	}
 	// if existedUser == (User{}) {
 	// 	return bussinesses.ErrNotFound
 	// }
 
-	return caseUser.repository.Delete(id)
+	return nil
 }
