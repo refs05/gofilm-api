@@ -36,12 +36,20 @@ func (casePayment *servicePayments) ValidatePayment(cartID int, payment *Payment
 	return result, nil
 }
 
-func (caseCart *servicePayments) CheckCart(CartID int) (*Payment, error) {
-	_, err := caseCart.repoCart.GetCartByID(CartID)
-	if err != nil {
-		return &Payment{}, err
-	}
-	return &Payment{}, nil
-}
+// func (caseCart *servicePayments) CheckCart(CartID int) (*Payment, error) {
+// 	result, err := caseCart.repoCart.GetCartByID(CartID)
+// 	// result = &carts.Cart{}
+// 	// fmt.Print(*result)
+// 	if result != nil {
+// 		fmt.Print(*result)
+// 	}
+// 	if err != nil {
+// 		return &Payment{}, err
+// 	}
+// 	// pay := Payment{
+// 	// 	CartID: result.Id,
+// 	// }
+// 	return &Payment{}, nil
+// }
 
 //error untuk store film ke koleksi
