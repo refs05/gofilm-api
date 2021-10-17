@@ -5,7 +5,7 @@ services:
         build: .
         restart: "no"
         ports:
-            - 8005:8000
+            - 8000:8000
 
     mysql-gofilm:
         image: mariadb:10.1
@@ -16,8 +16,7 @@ services:
         environment:
             MYSQL_ROOT_USER: root
             MYSQL_DATABASE: gofilm
-            MYSQL_PASSWORD: BavarianRestu2002
-            MYSQL_ROOT_PASSWORD: BavarianRestu2002
+            MYSQL_ROOT_PASSWORD: password
             MYSQL_USER: root
         ports:
             - 3336:3306

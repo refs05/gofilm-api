@@ -45,10 +45,7 @@ import (
 )
 
 func Init() {
-	viper.SetConfigName("config")
-	viper.AddConfigPath("./app/config/")
-	viper.AutomaticEnv()
-	viper.SetConfigType("json")
+	viper.SetConfigFile(`config/config.json`)
 	err := viper.ReadInConfig()
 	if err != nil {
 		panic(err)
@@ -72,6 +69,7 @@ func dbMigrate(db *gorm.DB) {
 }
 
 func main() {
+	Init()
 	configDB := _mysqlDriver.ConfigDB{
 		DB_Username: viper.GetString(`database.user`),
 		DB_Password: viper.GetString(`database.pass`),
