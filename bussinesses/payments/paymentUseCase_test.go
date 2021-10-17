@@ -61,7 +61,7 @@ func TestValidatePayment(t *testing.T) {
 			Cart: payments.Cart{},
 		}
 		paymentRepository.On("ChangeStatus", mock.AnythingOfType("*payments.Payment")).Return(&domain, nil).Once()
-
+		
 		result, err := paymentUseCase.ValidatePayment(23, &domain)
 
 		assert.Nil(t, err)
