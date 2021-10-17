@@ -1,7 +1,7 @@
 package carts
 
 import (
-	"fmt"
+	//"fmt"
 	"gofilm/bussinesses"
 	"gofilm/bussinesses/films"
 )
@@ -100,7 +100,7 @@ func (caseCart *serviceCarts) ChangeStatus(cartID int) error {
 
 	result := caseCart.repository.ChangeStatus(cartID)
 	if result != nil {
-		fmt.Print(result)
+		return result
 	}
 	// if result != nil {
 	// 	return 
