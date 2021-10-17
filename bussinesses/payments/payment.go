@@ -20,7 +20,7 @@ type Cart struct {
 
 type PaymentUseCase interface {
 	ValidatePayment(cartID int, payment *Payment) (*Payment, error)
-	CheckCart(CartID int) (*Payment, error)
+// 	CheckCart(CartID int) (*Payment, error)
 }
 
 type PaymentRepository interface {

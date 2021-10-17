@@ -10,11 +10,11 @@
         "host": "gofilm",
         "port": "3306",
         "user": "root",
-        "pass": "password",
+        "pass": "BavarianRestu2002",
         "name": "gofilm"
     },
     "jwt": {
         "secret": "supersecret6666!@#$%",
-        "expired": 1
+        "expired": 12
     }
 }
